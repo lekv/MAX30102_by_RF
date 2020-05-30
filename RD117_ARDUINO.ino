@@ -36,7 +36,7 @@
 #include "max30102.h"
 
 //#define DEBUG // Uncomment for debug output to the Serial stream
-#define USE_ADALOGGER // Comment out if you don't have ADALOGGER itself but your MCU still can handle this code
+//#define USE_ADALOGGER // Comment out if you don't have ADALOGGER itself but your MCU still can handle this code
 //#define TEST_MAXIM_ALGORITHM // Uncomment if you want to include results returned by the original MAXIM algorithm
 //#define SAVE_RAW_DATA // Uncomment if you want raw data coming out of the sensor saved to SD card. Red signal first, IR second.
 
@@ -49,7 +49,7 @@
 #endif
 
 // Interrupt pin
-const byte oxiInt = 10; // pin connected to MAX30102 INT
+const byte oxiInt = D5; // pin connected to MAX30102 INT
 
 // ADALOGGER pins
 #ifdef USE_ADALOGGER
@@ -225,6 +225,9 @@ void loop() {
     Serial.print(aun_ir_buffer[i], DEC);    
     Serial.println("");
 #endif // DEBUG
+    if (i % 25 == 0) {
+      yield();
+    }
   }
 
   //calculate heart rate and SpO2 after BUFFER_SIZE samples (ST seconds of samples) using Robert's method
